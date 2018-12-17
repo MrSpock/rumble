@@ -20,8 +20,8 @@ use bluez::protocol::hci;
 use bluez::adapter::peripheral::Peripheral;
 use bluez::constants::*;
 use api::EventHandler;
-use bluez::protocol::hci_message::HciMessage;
-use bluez::protocol::hci_message::HciMessage_Message;
+use hci::protocol::HciMessage;
+use hci::protocol::HciMessage_Message;
 
 #[derive(Copy, Debug)]
 #[repr(C)]
@@ -294,7 +294,7 @@ impl ConnectedAdapter {
 
         match message.get_message() {
             HciMessage_Message::HciEvent(event) => {
-                use bluez::protocol::hci_message::HciEvent_Event::*;
+                use hci::protocol::HciEvent_Event::*;
 
                 match event.get_event() {
                     DisconnectionComplete(event) => {
@@ -317,7 +317,7 @@ impl ConnectedAdapter {
                         // TODO: handle
                     }
                     LeMetaEvent(event) => {
-                        use bluez::protocol::hci_message::LeMetaEvent_Event::*;
+                        use hci::protocol::LeMetaEvent_Event::*;
                         match event.get_event() {
                             LeConnectionComplete(info) => {
                                 info!("connected to {:?}", info);
